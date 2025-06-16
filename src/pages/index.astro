@@ -1,18 +1,135 @@
 ---
-import Hello from '../components/Hello.jsx'
+import Layout from '../layouts/Layout.astro';
+import info from '../data/sample.json'
+import Link from '../components/Link.astro';
 ---
+<Layout title={info.name}>
 
-<html lang="en">
-  <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-  <meta name="generator" content={Astro.generator} />
-  <title>Ahmed Imran</title>
-  </head>
-  <body class="">
+  <header class="bg-tertiary h-screen">
+    <nav class="flex item-center justify-between mb-4 border-b p-2" id="navbar">
+      <div class="flex gap-4 w-1/4 px-4">
+        <h3 class="text-3xl w-1/2 cursor-default font-subhead" id="logo">
+          <Link href="/">{info.name}</Link>
+        </h3>
+
+        <ul class="border-l pl-2 overflow-hidden" id="menu">
+          {info.siteMap.map((site, index) => (
+            <li class="text-sm hover:underline duration-400 transform menu-item" data-index={index}>
+              <Link href={site.path}>{site.pageName}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      <div class="w-1/2 justify-center items-center flex">
+        <img src={info.images.logo} class="w-12 h-12 filter grayscale" id="main-logo"/>
+      </div>
+
+      <div class="w-1/4 flex items-center justify-end px-4">
+        <div class="flex border shadow-md py-2 px-4 cursor-default" id="status-card">
+          <p>Currently Available for <br/> {info.status}.</p>
+        </div>
+      </div>
+    </nav>
     
-    <Hello name="ahmed" />
-	<h2 class="bg-red-300">hey</h2>
-  </body>
-</html>
+    <div id="hero-content" class="flex flex-col items-center justify-center h-full">
+      <h1 class="text-4xl" id="main-title">
+        hi, {info.name}
+      </h1>
+      <p id="date">{new Date().toDateString()}</p>
+      <p class="bg-tertiary" id="role">{info.role}</p>
+    </div>
+  </header>
+  
+</Layout>
+
+<!-- GSAP Animation Script -->
+<script>
+  import { gsap } from "gsap";
+  import { SplitText } from "gsap/SplitText";
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    const splitText = new SplitText("#logo", { type: "words, chars, lines",
+      linesClass: "line",
+      wordsClass:"word",
+      mask:'lines'
+     });
+    
+    // 🎨 1. Animation للـ Navigation Bar
+    gsap.fromTo("#navbar", 
+      { y: -100, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
+    );
+
+    // 🎨 2. Animation للـ Logo
+    gsap.fromTo(splitText.lines, 
+      { overflow: "hidden",y:100 }, 
+      { y:0,duration: 1.2, delay: 0.3, ease: "back.out(1.7)" }
+    );
+
+    // 🎨 3. Animation للـ Menu Items
+    gsap.fromTo(".menu-item", 
+      { x: -50, opacity: 0 }, 
+      { 
+        x: 0, 
+        opacity: 1, 
+        duration: 0.8, 
+        delay: 0.5,
+        stagger: 0.2, 
+        ease: "power2.out" 
+      }
+    );
+
+    // 🎨 4. Animation للـ Main Logo 
+    gsap.fromTo("#main-logo", 
+      { scale: 0, rotation: 360 }, 
+      { scale: 1, rotation: 0, duration: 1.5, delay: 0.7, ease: "elastic.out(1, 0.5)" }
+    );
+
+    // 🎨 5. Animation للـ Status Card
+    gsap.fromTo("#status-card", 
+      { x: 100, opacity: 0 }, 
+      { x: 0, opacity: 1, duration: 1, delay: 0.9, ease: "power2.out" }
+    );
+
+    // 🎨 6. Animation للـ Hero Content
+    const heroTimeline = gsap.timeline({ delay: 1.2 });
+    
+    heroTimeline
+      .fromTo("#main-title", 
+        { y: 50, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
+      )
+      .fromTo("#date", 
+        { y: 30, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 
+        "-=0.5" 
+      )
+      .fromTo("#role", 
+        { y: 30, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 
+        "-=0.3"
+      );
+
+    // 🎨 7. Hover Animation للـ Menu Items
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        gsap.to(item, { scale: 1.1, duration: 0.3, ease: "power2.out" });
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        gsap.to(item, { scale: 1, duration: 0.3, ease: "power2.out" });
+      });
+    });
+
+    // 🎨 8. Continuous Animation للـ Main Logo 
+    gsap.to("#main-logo", {
+      rotation: 360,
+      duration: 20,
+      repeat: -1, 
+      ease: "none"
+    });
+
+  });
+</script>

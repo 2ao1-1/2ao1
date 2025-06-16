@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import info from '../data/sample.json'
+---
+<Layout title="About Ahmed">
+
+  <header class="bg-tertiary h-screen p-4">
+    <h1 class="text-4xl">
+      About, {info.name}
+    </h1>
+    <p class="bg-tertiary">{info.role}</p>
+  </header>
+  
+</Layout>

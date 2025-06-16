@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Old-English";
+  src: url(../assets/fonts/OldeEnglish.ttf);
+}
+@font-face {
+  font-family: "TimesNewRoman";
+  src: url(../assets/fonts/times-new-roman.ttf);
+}
+@font-face {
+  font-family: "Playfair";
+  src: url(../assets/fonts/PlayfairDisplay-VariableFont_wght.ttf);
+}
+@font-face {
+  font-family: "BebasNeue";
+  src: url(../assets/fonts/BebasNeue-Regular.ttf);
+}
+@font-face {
+  font-family: "sacramento";
+  src: url(../assets/fonts/Sacramento-Regular.ttf);
+}

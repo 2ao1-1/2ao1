@@ -1,15 +1,56 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 
-import react from '@astrojs/react';
-
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()],
+  // site: "https://2ao1-1.github.io",
+  // base: "/",
+
+  integrations: [react(), sitemap(), tailwind()],
 
   vite: {
-    plugins: [tailwindcss()]
-  }
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ["react", "react-dom"],
+            gsap: ["gsap"],
+          },
+        },
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "src/styles/variables.scss";',
+        },
+      },
+    },
+  },
+  // build: {
+  //   assets: "assets",
+  //   inlineStylesheets: "auto",
+  // },
+  //  output: "static",
+  // image: {
+  //   service: {
+  //     entrypoint: "astro/assets/services/sharp",
+  //   },
+  // },
+  // server: {
+  //   port: 3000,
+  //   host: true,
+  // },
+  // compressHTML: true,
+
+  // markdown: {
+  //   shikiConfig: {
+  //     theme: "github-dark",
+  //     wrap: true,
+  //   },
+  // },
 });
