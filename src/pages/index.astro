@@ -75,20 +75,19 @@ import Header from '../components/HeroSection/Header.astro';
     const heroTimeline = gsap.timeline({ delay: 2 });
     
     heroTimeline
-      .fromTo(mainTitle.lines, 
+    .fromTo("#date", 
+      { y: 30, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 
+      "-=0.5" 
+    )
+    .fromTo("#role", 
+      { y: 30, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 
+      "-=0.3"
+    ).fromTo(mainTitle.lines, 
         { y: 100, opacity: 0 }, 
         { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
       )
-      .fromTo("#date", 
-        { y: 30, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 
-        "-=0.5" 
-      )
-      .fromTo("#role", 
-        { y: 30, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 
-        "-=0.3"
-      );
 
     // 🎨 7. Hover Animation للـ Menu Items
     document.querySelectorAll('.menu-item').forEach(item => {
