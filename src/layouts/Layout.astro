@@ -1,13 +1,11 @@
 ---
-import Link from "../components/Link.astro"
 import info from "../data/sample.json"
-
 
 const {title = `${info.name}`}=Astro.props
 ---
 
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <!-- Meta tags -->
     <meta charset="UTF-8" />
@@ -29,22 +27,23 @@ const {title = `${info.name}`}=Astro.props
     <!-- Icons -->
     <link rel="icon" type="image/png" href="/favicon.png" />
 
+    <link href="../styles/global.css" rel="stylesheet" />
     <!-- Google tag (gtag.js) -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-G39QYJSQQB"
     ></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            window.dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
-        gtag("config", "G-G39QYJSQQB");
+        // window.dataLayer = window.dataLayer || [];
+        // function gtag() {
+        //     window.dataLayer.push(arguments);
+        // }
+        // gtag("js", new Date());
+        // gtag("config", "G-G39QYJSQQB");
     </script>
   </head>
 
-  <body class="bg-tertiary text-primary">
+  <body class="bg-tertiary text-primary-800 ">
     <slot />
   </body>
 </html>

@@ -1,0 +1,36 @@
+---
+import Link from "../Link.astro";
+import info from '../../data/sample.json'
+---
+<nav class="flex items-center justify-between mb-4 border-b p-2 absolute top-0 w-full" id="navbar">
+    <div class="flex gap-4 w-1/4 px-4">
+        <h3 class="text-2xl w-1/2 cursor-default font-mainHead" id="logo">
+          <Link href="/">{info.name}</Link>
+        </h3>
+
+        <ul class="border-l pl-2 overflow-hidden" id="menu">
+          {info.siteMap.map((site, index) => (
+            <li class="text-sm hover:underline duration-400 transform menu-item" data-index={index}>
+              <Link href={site.path}>{site.pageName}</Link>
+            </li>
+          ))}
+        </ul>
+    </div>
+      
+    <div class=" font-subhead">
+        <p id="date">{new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+            })}
+        </p>
+
+        <p id="date">{new Date().toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+            })}
+        </p>
+    </div>
+</nav>

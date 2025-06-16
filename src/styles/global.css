@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "Old-English";
-  src: url(../assets/fonts/OldeEnglish.ttf);
+  font-family: "Anton";
+  src: url(../assets/fonts/Anton-Regular.ttf);
 }
 @font-face {
-  font-family: "TimesNewRoman";
-  src: url(../assets/fonts/times-new-roman.ttf);
+  font-family: "Aeonik";
+  src: url(../assets/fonts/AeonikTRIAL-Regular.otf);
 }
-@font-face {
+/* @font-face {
   font-family: "Playfair";
   src: url(../assets/fonts/PlayfairDisplay-VariableFont_wght.ttf);
 }
@@ -19,4 +19,4 @@
 @font-face {
   font-family: "sacramento";
   src: url(../assets/fonts/Sacramento-Regular.ttf);
-}
+} */

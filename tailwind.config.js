@@ -7,8 +7,8 @@ export default {
 
   theme: {
     fontFamily: {
-      mainHead: ["TimesNewRoman", "Playfair Display", "serif"],
-      subhead: ["Playfair Display", "serif"],
+      mainHead: ["Anton", "serif"],
+      subhead: ["Aeonik", "Bebas Neue"],
       headline: ["Bebas Neue", "Arial", "sans-serif"],
       content: ["Inter", "Arial", "sans-serif"],
       handWrite: ["Sacramento", "cursive"],
@@ -32,8 +32,10 @@ export default {
           500: "#6c757d",
           600: "#495057",
           700: "#343a40",
-          800: "#212529",
-          900: "#222222", //main
+          800: "#2c3333",
+          900: "#212529",
+          // 900: "#222222",
+          // # //main
         },
 
         secondary: {
