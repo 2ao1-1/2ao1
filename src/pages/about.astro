@@ -1,14 +1,255 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import info from '../data/sample.json'
+import Link from '../components/Link.astro';
 ---
-<Layout title="About Ahmed">
+<Layout title={info.name}>
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden">
+    <div class="flex flex-col items-center justify-center h-full space-y-8">
+      <button id="close-menu" class="absolute top-4 right-4 text-white text-2xl">&times;</button>
+      <ul class="text-center space-y-6">
+        {info.siteMap.map(page => (
+          <li class="text-2xl font-mainHead text-white hover:text-primary-500 transition-colors">
+            <Link href={page.path}>{page.pageName}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
 
-  <header class="bg-tertiary h-screen p-4">
-    <h1 class="text-4xl">
-      About, {info.name}
-    </h1>
-    <p class="bg-tertiary">{info.role}</p>
-  </header>
-  
+  <main id="main-bg" class="rounded-b-3xl bg-tertiary p-4 w-full relative min-h-screen">
+    <!-- Sticky Navigation -->
+    <nav class="flex justify-between items-center w-full sticky top-0 z-40 bg-tertiary py-2">
+      <div class="font-mainHead text-xl md:text-2xl">AO</div>
+      <button id="menu-toggle" class="text-xl md:text-2xl hover:text-primary-500 transition-colors">
+        ☰
+      </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-tertiary w-full relative min-h-screen py-4">
+      <div class="flex justify-center items-center flex-col h-full">
+        
+        <!-- Main Title and Navigation -->
+        <div class="w-full flex justify-center items-center h-full flex-col lg:flex-row">
+          <!-- Title -->
+          <div class="flex-1 flex justify-center items-center mb-8 lg:mb-0">
+            <h1 id="main-title" class="font-mainHead text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] xl:text-[14rem] overflow-hidden flex justify-center items-center cursor-default text-center">
+              {info.name.toLocaleUpperCase()}
+            </h1>
+          </div>
+          
+          <!-- Desktop Navigation -->
+          <ul class="hidden lg:flex lg:flex-col border-l ml-4 pl-4 space-y-4 text-primary-500">
+            {info.siteMap.map(page => (
+              <li id="page-name" class="font-mainHead hover:text-primary-800 transition-colors hover:underline">
+                <Link href={page.path}>{page.pageName}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Info Bar -->
+        <div class="flex justify-between w-full text-xs sm:text-sm cursor-default mt-8 lg:mt-0">
+          <span id="span-hint" class="text-center flex-1">{info.location.city}</span>
+          <p id="role" class="tracking-widest text-center flex-1 px-2">{info.role}</p>
+          <span id="span-hint" class="text-center flex-1">{info.birthYear}</span>
+        </div>
+      </div>
+
+      <!-- Hero Text -->
+      <div class="absolute bottom-10 right-0 w-full lg:w-1/2 flex justify-center lg:justify-end px-4">
+        <p id="hero" class="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-subhead cursor-default text-center lg:text-right leading-tight">
+          Your Vision. My Code. Exceptional Results.
+        </p>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="min-h-screen py-8">
+      <span class="text-xs uppercase tracking-wider">
+        About
+      </span>
+      <!-- Add your about content here -->
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="p-4 flex flex-col lg:flex-row justify-between items-center text-tertiary text-xs space-y-4 lg:space-y-0">
+    <!-- Copyright -->
+    <div class="flex flex-col leading-5 text-center lg:text-left">
+      <span>{info.name}&trade;, 2025</span>
+      <span>&copy; All Rights Reserved</span>
+    </div>
+
+    <!-- Social Media -->
+    <div class="flex flex-col text-center">
+      <span class="text-secondary-400 mb-2">SocialMedia</span>
+      <ul class="flex gap-4 text-sm justify-center">
+        {info.social.links.map(link => (
+          <li><Link href={link.link}>{link.name}</Link></li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Time and Date -->
+    <div class="flex justify-center lg:justify-between items-center text-sm cursor-default space-x-4">
+      <span id="span-hint" class="time-display"></span>
+      <span id="span-hint" class="date-display"></span>
+    </div>
+  </footer>
 </Layout>
+
+<!-- GSAP Animation Script -->
+<script>
+  import { gsap } from "gsap";
+  import { SplitText } from "gsap/SplitText";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Functionality
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenu = document.getElementById('close-menu');
+
+    // Open mobile menu
+    menuToggle.addEventListener('click', function() {
+      mobileMenu.classList.remove('hidden');
+      // Animation for menu appearance
+      gsap.fromTo(mobileMenu, 
+        { opacity: 0 }, 
+        { opacity: 1, duration: 0.3 }
+      );
+    });
+
+    // Close mobile menu
+    function closeMobileMenu() {
+      gsap.to(mobileMenu, {
+        opacity: 0,
+        duration: 0.3,
+        onComplete: () => {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    }
+
+    closeMenu.addEventListener('click', closeMobileMenu);
+    
+    // Close menu when clicking outside
+    mobileMenu.addEventListener('click', function(e) {
+      if (e.target === mobileMenu) {
+        closeMobileMenu();
+      }
+    });
+
+    // Update time and date
+    function updateDateTime() {
+      const now = new Date();
+      const timeElement = document.querySelector('.time-display');
+      const dateElement = document.querySelector('.date-display');
+      
+      if (timeElement) {
+        timeElement.textContent = now.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+      }
+      
+      if (dateElement) {
+        dateElement.textContent = now.toLocaleDateString('en-US', {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+      }
+    }
+
+    // Update time every minute
+    updateDateTime();
+    setInterval(updateDateTime, 60000);
+
+    // GSAP Animations
+    try {
+      const spanHint = new SplitText("#span-hint", { 
+        type: "words, chars, lines",
+        linesClass: "char",
+        mask: 'chars'
+      });
+      
+      const mainTitle = new SplitText("#main-title", { 
+        type: "chars", 
+        charsClass: "char", 
+        mask: "chars" 
+      });
+
+      const pageName = new SplitText("#page-name", { 
+        type: "lines",
+        linesClass: "line",
+        mask: 'lines'
+      });
+      
+      const role = new SplitText('#role', {
+        type: "words, chars, lines",
+        linesClass: "line",
+        mask: 'lines'
+      });
+      
+      const hero = new SplitText('#hero', {
+        type: "words, chars, lines",
+        linesClass: "line",
+        mask: 'lines'
+      });
+
+      const heroTimeline = gsap.timeline({ delay: 1 });
+      
+      heroTimeline
+        .fromTo('#main-bg', {y: '-100%'}, {y: 0, duration: 2, ease: "none"})
+        .fromTo(spanHint.chars, 
+          { y: 100 }, 
+          { y: 0, duration: 1.5, ease: "power2.out" }, 
+          "-=0.5" 
+        )
+        .fromTo(mainTitle.chars, 
+          { y: 300 }, 
+          { y: 0, duration: 3, stagger: {each: 0.1, from: "start"}, ease: "elastic.out(0.3,0.3)" }
+        )
+        .fromTo(role.lines, {y: 100}, {y: 0, duration: 0.5})
+        .fromTo(pageName.lines, {x: -100}, {x: 0, duration: 0.5, stagger: 0.09})
+        .fromTo(hero.lines, {y: 100}, {y: 0, duration: 0.5});
+
+    } catch (error) {
+      console.warn('GSAP SplitText animation failed:', error);
+      // Fallback: simple fade in animation
+      gsap.fromTo('#main-bg', {opacity: 0}, {opacity: 1, duration: 1});
+    }
+  });
+</script>
+
+<style>
+  /* Ensure proper responsive behavior */
+  @media (max-width: 768px) {
+    #main-title {
+      line-height: 1.1;
+    }
+    
+    #hero {
+      line-height: 1.2;
+    }
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Improve mobile touch targets */
+  #menu-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

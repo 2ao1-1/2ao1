@@ -1,0 +1,28 @@
+---
+import info from '../data/sample.json'
+import Link from '../components/Link.astro';
+import HeroText from './HeroText.astro';
+import InfoBar from './InfoBar.astro';
+import DesktopNav from './DesktopNav.astro';
+---
+
+
+<header class="bg-tertiary w-full relative h-screen py-4">
+      <div  class="flex justify-center items-center flex-col">
+      <!-- Main Title and Navigation -->
+        <div class="w-full flex justify-center items-center h-full flex-col lg:flex-row">
+          <!-- Title -->
+          <div class="flex-1 flex justify-center items-center mb-8 lg:mb-0">
+            <h1 id="main-title" class="font-mainHead text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] xl:text-[14rem] overflow-hidden flex justify-center items-center cursor-default text-center">
+              {info.name.toLocaleUpperCase()}
+            </h1>
+          </div>
+          
+          <DesktopNav/>
+        </div>
+
+        <InfoBar/>
+    </div>
+
+    <HeroText/>
+  </header>

@@ -1,0 +1,23 @@
+---
+import info from "../data/sample.json"
+import Link from "./Link.astro"
+---
+<!-- Footer -->
+  <footer class="p-4 flex flex-col lg:flex-row justify-between items-center text-tertiary text-xs space-y-4 lg:space-y-0">
+    <!-- Copyright -->
+    <div class="flex flex-col leading-5 text-center lg:text-left">
+      <span>{info.name}&trade;, 2025</span>
+      <span>&copy; All Rights Reserved</span>
+    </div>
+
+    <!-- Social Media -->
+    <div class="flex flex-col text-center">
+      <span class="text-secondary-400 mb-2">SocialMedia</span>
+      <ul class="flex gap-4 text-sm justify-center">
+        {info.social.links.map(link => (
+          <li><Link href={link.link}>{link.name}</Link></li>
+        ))}
+      </ul>
+    </div>
+  
+</footer>

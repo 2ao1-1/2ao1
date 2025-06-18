@@ -2,111 +2,72 @@
 import Layout from '../layouts/Layout.astro';
 import info from '../data/sample.json'
 import Link from '../components/Link.astro';
-import Header from '../components/HeroSection/Header.astro';
+import Header from '../components/Header.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
 ---
 <Layout title={info.name}>
-
-  <Header/>
+  <main id="main-bg" class="rounded-b-3xl bg-tertiary p-4 w-full relative h-fit">
     
-  
+    <Navbar/>
+    
+      <Header/>
+  <section>
+    <section class="h-screen">
+      <span class="text-xs">
+        About
+      </span>
+      
+      
+    </section>
+  </section>
+</main>
+<Footer/>
 </Layout>
 
 <!-- GSAP Animation Script -->
 <script>
   import { gsap } from "gsap";
   import { SplitText } from "gsap/SplitText";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+  
   document.addEventListener('DOMContentLoaded', function() {
-
-    const splitText = new SplitText("#logo", { type: "words, chars, lines",
-      linesClass: "line",
-      wordsClass:"word",
-      mask:'lines'
+    const spanHint = new SplitText("#span-hint", { type: "words, chars, lines",
+      linesClass: "char",
+      mask:'chars'
      });
-    const logoImg = new SplitText("#main-logo", { type: "words, chars, lines",
+    const mainTitle = new SplitText("#main-title", { type: "chars", charsClass: "char", mask: "chars" });
+ 
+    const pageName=new SplitText("#page-name",{ type: "lines",
+       linesClass: "line",
+       mask:'lines'})
+     
+    const role=new SplitText('#role',{type: "words, chars, lines",
       linesClass: "line",
-      wordsClass:"word",
-      mask:'lines'
-     });
-     const mainTitle=new SplitText("#main-title", { type: "words, chars, lines",
+      mask:'lines'})
+      
+    const hero=new SplitText('#hero',{type: "words, chars, lines",
       linesClass: "line",
-      wordsClass:"word",
-      mask:'lines'
-     });
-    
-    // 🎨 1. Animation للـ Navigation Bar
-    gsap.fromTo("#navbar", 
-      { y: -100, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
-    );
+      mask:'lines'})
 
-    // 🎨 2. Animation للـ Logo
-    gsap.fromTo(splitText.lines, 
-      { overflow: "hidden",y:100 }, 
-      { y:0,duration: 1.2, delay: 0.5,  }
-    );
-
-    // 🎨 3. Animation للـ Menu Items
-    gsap.fromTo(".menu-item", 
-      { x: -50, opacity: 0 }, 
-      { 
-        x: 0, 
-        opacity: 1, 
-        duration: 0.8, 
-        delay: 0.8,
-        stagger: 0.2, 
-        ease: "power2.out" 
-      }
-    );
-
-    // 🎨 4. Animation للـ Main Logo 
-    gsap.fromTo("#main-logo", 
-      { scale: 0, rotation: 360 }, 
-      { scale: 1, rotation: 0, duration: 1.5, delay: 1.3, ease: "elastic.out(1, 0.5)" }
-    );
-
-    // 🎨 5. Animation للـ Status Card
-    gsap.fromTo("#status-card", 
-      { x: 100, opacity: 0 }, 
-      { x: 0, opacity: 1, duration: 1, delay: 1.6, ease: "power2.out" }
-    );
-
-    // 🎨 6. Animation للـ Hero Content
-    const heroTimeline = gsap.timeline({ delay: 2 });
+   
+    const heroTimeline = gsap.timeline({ delay:1 });
     
     heroTimeline
-    .fromTo("#date", 
-      { y: 30, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 
+    .fromTo('#main-bg',{y:'-100%'},{y:0,duration:2,ease:"none"})
+    .fromTo(spanHint.chars, 
+      { y: 100, }, 
+      { y: 0, duration: 1.5, ease: "power2.out" }, 
       "-=0.5" 
     )
-    .fromTo("#role", 
-      { y: 30, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 
-      "-=0.3"
-    ).fromTo(mainTitle.lines, 
-        { y: 100, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
-      )
-
-    // 🎨 7. Hover Animation للـ Menu Items
-    document.querySelectorAll('.menu-item').forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        gsap.to(item, { scale: 1.1, duration: 0.3, ease: "power2.out" });
-      });
-      
-      item.addEventListener('mouseleave', () => {
-        gsap.to(item, { scale: 1, duration: 0.3, ease: "power2.out" });
-      });
-    });
-
-    // 🎨 8. Continuous Animation للـ Main Logo 
-    gsap.to("#main-logo", {
-      rotation: 360,
-      duration: 20,
-      repeat: -1, 
-      ease: "none"
-    });
+    .fromTo(mainTitle.chars, 
+        { y: 300 }, 
+        { y: 0,duration: 3, stagger: {each: 0.1, from: "start"},ease:"elastic.out(0.3,0.3)"}
+    )
+    .fromTo(role.lines,{y:100},{y:0,duration:.5})
+    .fromTo(pageName.lines,{x:-100},{x:0, duration:0.5,stagger:0.09})
+    .fromTo(hero.lines,{y:100},{y:0,duration:.5})
 
   });
 </script>
