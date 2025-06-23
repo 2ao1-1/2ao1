@@ -1,14 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import info from '../data/sample.json'
+import RefreshText from '../ui/RefreshText.astro';
+// import RefreshText from '../ui/RefreshText';
 ---
-<Layout title="Ahmed Projects">
+<div class="bg-gray-400 flex flex-col items-center justify-center min-h-screen">
 
-  <header class="bg-tertiary h-screen p-4">
-    <h1 class="text-4xl">
-      projects, {info.name}
-    </h1>
-    <p class="bg-tertiary">{info.role}</p>
-  </header>
+  <!-- <RefreshText  /> -->
+   <h1 class="font-headline text-4xl">
+     <RefreshText title="hell shit" />
+     <RefreshText title="hell shit" />
+     <RefreshText title="hell shit" />
+     <RefreshText title="hell shit" />
+   </h1>
+</div>
   
-</Layout>

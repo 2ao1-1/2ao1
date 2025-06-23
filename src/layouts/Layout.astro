@@ -1,7 +1,9 @@
 ---
-import info from "../data/sample.json"
-
 const {title = `${info.name}`}=Astro.props
+import info from "../data/sample.json"
+import Footer from "../components/Footer.astro"
+import Navbar from "./Navbar.astro"
+import InfoSection from "./InfoSection.astro"
 ---
 
 <!doctype html>
@@ -11,7 +13,7 @@ const {title = `${info.name}`}=Astro.props
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="{Astro.generator}" />
-
+    
     <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta
@@ -20,7 +22,7 @@ const {title = `${info.name}`}=Astro.props
     />
     <meta
       name="keywords"
-      content="Ahmed Omran, Frontend Developer, React, Next.js, JavaScript, TypeScript, Portfolio"
+      content="Ahmed Omran, Frontend Developer, React, Next.js, JavaScript, TypeScript, Portfolio, 2ao1, ao, AO"
     />
     <meta name="author" content="Ahmed Omran" />
 
@@ -32,8 +34,8 @@ const {title = `${info.name}`}=Astro.props
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-G39QYJSQQB"
-    ></script>
-    <script>
+      ></script>
+    <script defer>
         window.dataLayer = window.dataLayer || [];
         function gtag() {
             window.dataLayer.push(arguments);
@@ -44,6 +46,16 @@ const {title = `${info.name}`}=Astro.props
   </head>
 
   <body class="bg-primary-800 px-2">
-    <slot />
-  </body>
+    <div class="bg-secondary-200 rounded-3xl">
+      <main class="bg-tertiary text-primary-800 rounded-b-3xl">
+        <!-- Navbar -->
+        <Navbar/>
+
+        <slot />
+      </main>
+
+      <InfoSection/>
+    </div>
+    <Footer/>
+</body>
 </html>

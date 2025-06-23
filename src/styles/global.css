@@ -32,18 +32,3 @@
 .word {
   overflow: hidden;
 }
-/* 
-::scroll-marker {
-  background: #f8f8f8;
-} */
-
-::-webkit-scrollbar {
-  background: #212529;
-}
-::-webkit-scrollbar-thumb {
-  background: #212529;
-}
-
-::-webkit-scrollbar-button {
-  background: #212529;
-}

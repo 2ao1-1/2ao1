@@ -1,0 +1,148 @@
+---
+import info from '../data/sample.json';
+import Link from '../components/Link.astro';
+import RefreshText from '../ui/RefreshText.astro';
+---
+
+<div class="px-4 pt-10 grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-40 overflow-hidden">
+  <!-- Profile Section -->
+  <div class="col-span-1 lg:col-span-1 grid justify-center order-1 lg:order-1">
+    <img src={info.images.myImg} class='w-40 md:w-60 contact-img mx-auto' alt='ahmed omran img'/>
+    <div id="title-wrap" class="hidden md:flex items-center justify-center mb-4">
+      <h1 id="main-title" class="font-headline text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[16rem] overflow-hidden flex justify-center items-center cursor-default contact-title">
+        {info.name.split(" ").map(title=>title.slice(0,1))}
+      </h1>
+    </div>
+  </div>
+
+  <!-- Navigation Section -->
+  <div class="col-span-1 lg:col-span-1 order-2 lg:order-2">
+    <span class="hidden md:block text-xs text-secondary-800 text-center">[NAVIGATION]</span>
+    <ul class="mt-6 md:space-y-4 contact-nav overflow-hidden">
+      {info.siteMap.map(page =>
+        <li class="text-xl sm:text-4xl md:text-5xl lg:text-6xl font-headline hover:text-tertiary transition-all duration-500 contact-nav-item overflow-hidden">
+          <Link href={page.path}>
+            <RefreshText title={page.pageName}/>
+          </Link>
+        </li>
+      )}
+    </ul>
+  </div>
+  
+  <!-- Info Section -->
+  <div class='col-span-2 lg:col-span-2 px-0 lg:px-4 order-2 lg:order-3'>
+    <div class="mb-8">
+      <span class="text-xs text-secondary-800 md:mb-8">[MY PHILOSOPHY]</span>
+      <p class="mt-6 contact contact-philosophy overflow-hidden text-sm md:text-base">
+        I believe exceptional web applications are born at the intersection of beautiful design and flawless functionality. Every project I undertake is an opportunity to push boundaries, solve real problems, and create something that makes a difference in how people interact with technology.
+      </p>
+    </div>
+
+    <div class="mb-8">
+      <span class="text-xs text-secondary-800 mb-8">[Info]</span>
+      <ul class="contact-info-list space-y-2 text-sm md:text-base">
+        <li class="overflow-hidden contact">
+          <span class="font-headline">[A]</span>: {info.location.city+', '+info.location.country}
+        </li>
+        <li class="overflow-hidden contact">
+          <span class="font-headline">[E]</span>: {info.email}
+        </li>
+        <li class="overflow-hidden contact">
+          <span class="font-headline">[P]</span>: {info.phone}
+        </li>
+        <li class="overflow-hidden contact">
+          <span class="font-headline">[H]</span>: Sunday to Thursday, 9:00am - 5:00pm
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  // ✅ Image Animation
+  gsap.to('.contact-img',{
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.contact-img',
+      start: 'top 90%',
+    },
+  });
+
+  // AO Title Split Animation
+  const splitAO = new SplitText('.contact-title', {
+    type: 'chars',
+    charsClass: 'char',
+    masks: true
+  });
+
+  gsap.from(splitAO.chars, {
+    y: 200,
+    opacity: 0,
+    stagger: 0.1,
+    ease: 'power3.out',
+    duration: 1,
+    scrollTrigger: {
+      trigger: '.contact-title',
+      start: 'top 90%',
+    }
+  });
+
+  //  Navigation Items Animation
+  gsap.fromTo('.contact-nav-item',{y:100, opacity: 0}, {
+    y: 0,
+    opacity: 1,
+    stagger: 0.2,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.contact-nav',
+      start: 'top 95%',
+    },
+  });
+
+  // Philosophy Paragraph Animation
+  const splitPhilosophy = new SplitText('.contact-philosophy', {
+    type: 'lines',
+    linesClass: 'line',
+    masks: true
+  });
+
+  gsap.from(splitPhilosophy.lines, {
+    y: 80,
+    opacity: 0,
+    stagger: 0.15,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.contact-philosophy',
+      start: 'top 95%',
+    }
+  });
+
+  const infoItems = document.querySelectorAll('.contact-info-list li');
+
+  infoItems.forEach((item, i) => {
+    gsap.from(item, {
+      y: 100,
+      opacity: 0,
+      duration: 0.6,
+      delay: 0.2 + i * 0.1,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: item,
+        start: 'top 95%',
+      }
+    });
+  });
+});
+</script>

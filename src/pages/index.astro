@@ -1,73 +1,21 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import info from '../data/sample.json'
-import Link from '../components/Link.astro';
-import Header from '../components/Header.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/index/Header.astro";
+import AboutSection from "../components/index/AboutSection.astro";
+import ProjectSection from "../components/index/ProjectSection.astro";
+import ContactSection from "../components/index/ContactSection.astro";
 ---
-<Layout title={info.name}>
-  <main id="main-bg" class="rounded-b-3xl bg-tertiary p-4 w-full relative h-fit">
-    
-    <Navbar/>
-    
-      <Header/>
-  <section>
-    <section class="h-screen">
-      <span class="text-xs">
-        About
-      </span>
-      
-      
-    </section>
-  </section>
-</main>
-<Footer/>
+
+<Layout>
+  <!-- header -->
+  <Header />
+
+  <!-- About -->
+  <AboutSection />
+
+  <!-- Project -->
+  <ProjectSection />
+
+  <!-- Contact -->
+  <ContactSection />
 </Layout>
-
-<!-- GSAP Animation Script -->
-<script>
-  import { gsap } from "gsap";
-  import { SplitText } from "gsap/SplitText";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    const spanHint = new SplitText("#span-hint", { type: "words, chars, lines",
-      linesClass: "char",
-      mask:'chars'
-     });
-    const mainTitle = new SplitText("#main-title", { type: "chars", charsClass: "char", mask: "chars" });
- 
-    const pageName=new SplitText("#page-name",{ type: "lines",
-       linesClass: "line",
-       mask:'lines'})
-     
-    const role=new SplitText('#role',{type: "words, chars, lines",
-      linesClass: "line",
-      mask:'lines'})
-      
-    const hero=new SplitText('#hero',{type: "words, chars, lines",
-      linesClass: "line",
-      mask:'lines'})
-
-   
-    const heroTimeline = gsap.timeline({ delay:1 });
-    
-    heroTimeline
-    .fromTo('#main-bg',{y:'-100%'},{y:0,duration:2,ease:"none"})
-    .fromTo(spanHint.chars, 
-      { y: 100, }, 
-      { y: 0, duration: 1.5, ease: "power2.out" }, 
-      "-=0.5" 
-    )
-    .fromTo(mainTitle.chars, 
-        { y: 300 }, 
-        { y: 0,duration: 3, stagger: {each: 0.1, from: "start"},ease:"elastic.out(0.3,0.3)"}
-    )
-    .fromTo(role.lines,{y:100},{y:0,duration:.5})
-    .fromTo(pageName.lines,{x:-100},{x:0, duration:0.5,stagger:0.09})
-    .fromTo(hero.lines,{y:100},{y:0,duration:.5})
-
-  });
-</script>

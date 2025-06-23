@@ -1,0 +1,98 @@
+---
+import info from '../../data/sample.json';
+import RefreshText from '../../ui/RefreshText.astro';
+import Link from '../Link.astro';
+---
+<section class="p-4 bg-tertiary" id="about">
+  <div class="py-10 md:py-20 border-t">
+    <!-- Section Title -->
+    <div class="text-4xl sm:text-5xl md:text-6xl lg:text-[7rem] leading-tight lg:leading-[6rem] flex flex-col lg:flex-row justify-center gap-2 lg:gap-4">
+      <div class="font-headline grid justify-start items-start md:flex md:flex-col md:items-end md:justify-start">
+        <p class="about-text overflow-hidden">What started</p>
+        <p class="about-text overflow-hidden">as curiosity</p>
+      </div>
+
+      <div class="lg:pt-24 grid justify-start">
+        <div class="grid justify-end md:flex md:flex-col  md:justify-start font-headline ">
+          <p class="about-text overflow-hidden">has evolved</p>
+          <p class="about-text overflow-hidden">into a passion</p>
+        </div>
+        <p id="about-content" class="text-sm overflow-hidden mt-4 lg:text-left px-4 lg:px-0">
+          where I transform complex business challenges into elegant, intuitive web solutions.
+        </p>
+
+        <div class="text-sm flex justify-center lg:justify-start mt-12 lg:mt-24 overflow-hidden">
+          <span id="about-btn" class="text-xs border py-1 px-4 rounded-full bg-primary-800 text-tertiary">
+            <Link href={info.siteMap[1].path}>
+              <RefreshText title="Know More About Ahmed &RightArrow;" />
+            </Link>
+          </span>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { SplitText } from 'gsap/SplitText';
+
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
+ document.addEventListener('DOMContentLoaded', () => {
+  const aboutTexts = document.querySelectorAll('.about-text');
+  const aboutContent = document.getElementById('about-content');
+  const aboutBtn = document.getElementById('about-btn');
+
+  // Create a master timeline
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#about',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse',
+    }
+  });
+
+  // 1. Split and animate each headline line separately
+  aboutTexts.forEach((el, index) => {
+    const splitLine = new SplitText(el, {
+      type: 'lines',
+      linesClass: 'line',
+      masks: true
+    });
+
+    tl.from(splitLine.lines, {
+      y: 100,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.8,
+      ease: 'power3.out',
+    }, index * 0.2); // slight stagger between blocks
+  });
+
+  // 2. Animate about content paragraph
+  const splitParagraph = new SplitText(aboutContent, {
+    type: 'lines',
+    linesClass: 'line',
+    masks: true
+  });
+
+  tl.from(splitParagraph.lines, {
+    y: 80,
+    opacity: 0,
+    stagger: 0.08,
+    duration: 0.6,
+    ease: 'power2.out',
+  }, "+=0.3");
+
+  // 3. Animate the button after paragraph
+  tl.from(aboutBtn, {
+    y: 60,
+    opacity: 0,
+    duration: 0.6,
+    ease: 'power2.out',
+  }, "+=0.2");
+});
+</script>

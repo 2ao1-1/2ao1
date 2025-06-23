@@ -1,0 +1,129 @@
+---
+import info from '../../data/sample.json';
+import RefreshText from '../../ui/RefreshText.astro';
+import Link from '../Link.astro';
+---
+
+<section class="p-4">
+  <div class="py-10 md:py-20 border-t">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+      <h2 class="text-6xl md:text-7xl lg:text-[10rem] font-headline mb-4 overflow-hidden w-full md:w-1/2">Featured Works</h2>
+
+      <div class="w-full md:w-1/2 relative flex justify-end items-end">
+        <span class="font-headline text-4xl sm:text-6xl md:text-7xl lg:text-9xl overflow-hidden">[0{info.projects.length}]</span>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 lg:gap-x-12 gap-y-10 md:gap-y-20 items-start justify-between w-full py-10 relative h-fit">
+      {info.projects.map(project=>
+      <div class="col-span-1 group transition-all duration-500">
+        <img src={project.img} alt="" class="w-full grayscale hover:grayscale-0 transition-all duration-500">
+              
+        <div class="flex flex-row justify-between items-start sm:items-center font-headline py-1 gap-2 sm:gap-0">
+          <div class="flex flex-row gap-2 sm:gap-8 overflow-hidden">
+            <span class="project-line text-sm sm:text-base">[0{info.projects.indexOf(project)+1}]</span>
+            <span class="project-line text-sm sm:text-base">{project.title}</span>
+          </div>
+          <span class="project-line flex items-center px-0 sm:px-4 gap-4 overflow-hidden text-sm sm:text-base">
+            <span class="project-date block group-hover:hidden transition-all duration-300">{project.date}</span>
+            <span 
+              class="hidden group-hover:inline-block transition-all duration-500"
+            >
+            <Link
+              href={`projects/${project.title}`}
+              >
+              View Project  &RightArrow;
+            </Link>
+            </span>
+          </span>
+        </div>
+        
+      </div>)}
+    </div>
+  </div>
+</section>
+
+<script>
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Featured Title Animation
+  const title=new SplitText('h2', {
+    type: 'lines',
+    linesClass: 'line',
+    masks: true,
+  });
+  const counter=new SplitText('h2 ~ div span', {
+    type: 'lines',
+    linesClass: 'line',
+    masks: true,
+  });
+
+  gsap.from(title.lines, {
+    y: 150,
+    duration: 1.2,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: title.lines,
+      start: 'top 90%',
+    },
+  });
+
+  gsap.from(counter.lines, {
+    y: 150,
+    duration: 1.2,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: counter.lines,
+      start: 'top 90%',
+    },
+  });
+
+  // Loop over projects
+  const projectCards = document.querySelectorAll('.col-span-1');
+
+  projectCards.forEach((card, index) => {
+    const image = card.querySelector('img');
+    const textLines = card.querySelectorAll('.project-line');
+
+    // Animate image
+    gsap.from(image, {
+      y: 100,
+      duration: 1,
+      delay: index * 0.1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 90%',
+      },
+    });
+
+    // Animate text lines with SplitText
+    textLines.forEach((line, lineIndex) => {
+      const split = new SplitText(line, {
+        type: 'lines',
+        linesClass: 'line',
+        masks: true,
+      });
+
+      gsap.from(split.lines, {
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.2 + index * 0.1 + lineIndex * 0.05,
+        stagger: 0.05,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: line,
+          start: 'top 95%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+    });
+  });
+});
+</script>

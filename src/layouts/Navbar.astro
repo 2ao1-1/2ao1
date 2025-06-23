@@ -1,0 +1,74 @@
+---
+import info from '../data/sample.json';
+import Link from '../components/Link.astro';
+import RefreshText from '../ui/RefreshText.astro';
+import Image from '../ui/Image.astro';
+---
+
+<div id="nav-bar" class="fixed top-0 flex justify-between items-center w-full py-2 px-4 z-50">
+    <Link href="/">
+        <img src={info.images.logo} alt="logo" class="h-4 w-4 grayscale" />
+    </Link>
+                   
+    <div class="fixed top-2 z-40 right-6 overflow-hidden">
+        <button class={`px-2 py-1 bg-primary-800 text-tertiary rounded-full text-xs`}>
+            <Link href={info.siteMap[3].path}>
+                <RefreshText title="Get Contact" />
+            </Link>
+        </button>
+        <button id="menu-btn" class={`opacity-0 px-2 py-1 border border-primary-800 text-primary-800 bg-tertiary rounded-full text-xs ml-2`}>
+            <RefreshText title="Menu" />
+        </button>
+    </div>
+</div>
+
+<script>
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navBar = document.getElementById('nav-bar');
+    const menuBtn = document.getElementById('menu-btn');
+
+    // Show the navbar 
+    gsap.fromTo(navBar, 
+        { y: -100, opacity: 0 },
+        { 
+            y: 0, 
+            opacity: 1, 
+            duration: 0.8,
+            ease: 'power2.out',
+            delay: 0.5
+        }
+    );
+    
+    // show the menu button when scrolling down
+    ScrollTrigger.create({
+        trigger: "body",
+        start: "top -100px",
+        end: "bottom bottom",
+        onEnter: () => {
+            // show when scrolling down
+            gsap.to(menuBtn, {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        },
+        onLeaveBack: () => {
+            // hide when back
+            gsap.to(menuBtn, {
+                y: 100,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        },
+    });
+    
+    
+});
+</script>

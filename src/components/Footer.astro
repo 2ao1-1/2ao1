@@ -1,23 +1,69 @@
 ---
 import info from "../data/sample.json"
+import RefreshText from "../ui/RefreshText.astro"
 import Link from "./Link.astro"
 ---
 <!-- Footer -->
-  <footer class="p-4 flex flex-col lg:flex-row justify-between items-center text-tertiary text-xs space-y-4 lg:space-y-0">
-    <!-- Copyright -->
-    <div class="flex flex-col leading-5 text-center lg:text-left">
-      <span>{info.name}&trade;, 2025</span>
-      <span>&copy; All Rights Reserved</span>
-    </div>
+<footer class="p-4 flex flex-col lg:flex-row justify-between items-center text-tertiary text-xs gap-y-4 gap-x-6">
+  <!-- Availability -->
+  <div id='availability-status' class='text-white font-mono w-full lg:w-1/3 text-center lg:text-left order-2 lg:order-1'>
+    Loading...
+  </div>
 
-    <!-- Social Media -->
-    <div class="flex flex-col text-center">
-      <span class="text-secondary-400 mb-2">SocialMedia</span>
-      <ul class="flex gap-4 text-sm justify-center">
-        {info.social.links.map(link => (
-          <li><Link href={link.link}>{link.name}</Link></li>
-        ))}
-      </ul>
-    </div>
-  
+  <!-- Social links -->
+  <span id="splitline" class='flex flex-wrap gap-4 w-full lg:w-1/3 justify-center order-1 lg:order-2'>
+    {info.social.links.map(socialLink => (
+      <Link href={socialLink.link}>
+        <RefreshText title={socialLink.name} />
+      </Link>
+    ))}
+  </span>
+
+  <!-- Copyright -->
+  <div class="flex flex-col items-center lg:items-end text-center lg:text-right w-full lg:w-1/3 order-3 lg:order-3">
+    <span id="splitline" class="flex">
+      <Link href="/">
+        <RefreshText title={info.name} />
+      </Link>
+      &trade;, 2025
+    </span>    
+    <span id="splitline">&copy; All Rights Reserved</span>
+  </div>
 </footer>
+
+<script src="../../public/utils/availability.js" defer></script>
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const splitline=new SplitText("#splitline", {
+      type: "lines",
+      linesClass: "line",
+      masks: true,
+    });
+
+    gsap.from("footer", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: "footer",
+        start: "top 100%",
+      }
+    });
+
+    gsap.from(splitline.lines, {
+      y: 150,
+      duration: 1.2,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: splitline.lines,
+        start: "top 95%",
+      }
+    });
+  });
+</script>

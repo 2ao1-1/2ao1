@@ -1,0 +1,78 @@
+---
+const { title } = Astro.props;
+const uniqueId = `text-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<span
+  id={uniqueId}
+  class="group flex flex-col justify-center items-center overflow-hidden relative text-container">
+  <span class="top-text">{title}</span>
+  <span class="bottom-text absolute top-0">{title}</span>
+</span>
+
+<script>
+import { gsap } from "gsap";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(SplitText);
+
+window.addEventListener("DOMContentLoaded", () => {
+  const textContainers = document.querySelectorAll(".text-container");
+  
+  textContainers.forEach((textContainer) => {
+    const topText = textContainer.querySelector(".top-text");
+    const bottomText = textContainer.querySelector(".bottom-text");
+    
+    const splitTop = new SplitText(topText, {
+      type: "lines",
+      linesClass: "line",
+    });
+    
+    const splitBottom = new SplitText(bottomText, {
+      type: "lines",
+      linesClass: "line",
+    });
+    
+    gsap.set(splitBottom.lines, { y: 100, opacity: 0 });
+    gsap.set(splitTop.lines, { y: 0, opacity: 1 });
+    
+    textContainer.addEventListener("mouseenter", () => {
+      gsap.to(splitTop.lines, {
+        y: -100,
+        opacity: 0,
+        stagger: 0.03,
+        ease: "power2.out",
+        duration: 0.5,
+      });
+      
+      gsap.to(splitBottom.lines, {
+        y: 0,
+        opacity: 1,
+        stagger: 0.03,
+        ease: "power2.out",
+        duration: 0.5,
+        delay: 0.05,
+      });
+    });
+    
+    textContainer.addEventListener("mouseleave", () => {
+      gsap.to(splitBottom.lines, {
+        y: 100,
+        opacity: 0,
+        stagger: 0.03,
+        ease: "power2.in",
+        duration: 0.4,
+      });
+      
+      gsap.to(splitTop.lines, {
+        y: 0,
+        opacity: 1,
+        stagger: 0.03,
+        ease: "power2.out",
+        duration: 0.4,
+        delay: 0.05,
+      });
+    });
+  });
+});
+</script>

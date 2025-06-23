@@ -1,0 +1,70 @@
+---
+import info from '../../data/sample.json';
+import RefreshText from '../../ui/RefreshText.astro';
+import Link from '../Link.astro';
+---
+
+<section class="p-4">
+  <div class="py-10 md:py-20 border-t">
+    <h2 class="text-3xl sm:text-6xl md:text-7xl lg:text-9xl font-headline flex flex-col justify-end items-center md:items-end cursor-default px-2 md:px-0">
+      <p class="cta-line overflow-hidden">Let's Build Something</p>
+      <p class="cta-line overflow-hidden">Extraordinary</p>
+      <p class="cta-line overflow-hidden">Together.</p>
+    </h2>
+
+    <div class="flex justify-center px-4 pt-6 md:pt-10 overflow-hidden">
+      <button class="cta-btn bg-primary-800 text-tertiary py-2 px-6 md:py-1 md:px-8 rounded-full text-sm md:text-base">
+        <Link href={info.siteMap[3].path}>
+          <RefreshText title="Let's Talk About Your Vision &RightArrow;"/>
+        </Link>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const lines = document.querySelectorAll('.cta-line');
+  const button = document.querySelector('.cta-btn');
+
+  lines.forEach((line, index) => {
+    const split = new SplitText(line, {
+      type: 'lines',
+      linesClass: 'line',
+      masks: true
+    });
+
+    gsap.from(split.lines, {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      delay: index * 0.2,
+      scrollTrigger: {
+        trigger: line,
+        start: 'top 90%',
+        toggleActions: 'play none none reverse',
+      }
+    });
+  });
+
+  gsap.from(button, {
+    y: 60,
+    opacity: 0,
+    duration: 1,
+    delay: 0.7,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: button,
+      start: 'top 95%',
+      toggleActions: 'play none none reverse',
+    }
+  });
+});
+</script>

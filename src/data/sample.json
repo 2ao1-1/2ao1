@@ -6,9 +6,9 @@
   "email": "Omran.a.jr@gmail.com",
   "images": {
     "logo": "./favicon.png",
-    "myImg": "./images/My__img.jpg",
-    "myImgTop": "./images/My__img_top.jpg",
-    "storyImg": "./images/sroty1.jpg"
+    "myImg": "./src/assets/images/My__img.jpg",
+    "myImgTop": "./src/assets/images/My__img_top.jpg",
+    "storyImg": "./src/assets/images/sroty1.jpg"
   },
   "location": { "city": "Cairo", "country": "Egypt" },
   "status": "Freelance Projects",
@@ -64,12 +64,12 @@
     }
   ],
   "social": {
+    "cv": {
+      "name": "Resume",
+      "icon": "<File />",
+      "link": "./../assets/AhmedOmran_FrontendDeveloper_CV.pdf"
+    },
     "links": [
-      {
-        "name": "Resume",
-        "icon": "<File />",
-        "link": "../AhmedOmran_FrontendDeveloper_CV.pdf"
-      },
       {
         "name": "Github",
         "icon": "<Github />",
@@ -114,7 +114,7 @@
     {
       "title": "Crusto",
       "date": "9 / 2024",
-      "img": "/images/project6-crusto.jpg",
+      "img": "./src/assets/images/project6-crusto.jpg",
       "bio": "An Italian restaurant on Egyptian lands with a taste of history",
       "url": "https://crusto-resturant.netlify.app/",
       "repo": "https://github.com/2ao1-1/Crusto",
@@ -134,7 +134,7 @@
     {
       "title": "Banki",
       "date": "10 / 2024",
-      "img": "/images/project2-banki.jpg",
+      "img": "./src/assets/images/project2-banki.jpg",
       "bio": "A fitness website promoting healthy living.",
       "url": "https://banky.netlify.app/",
       "repo": "https://github.com/2ao1-1/Banki",
@@ -155,7 +155,7 @@
     {
       "title": "MoveOn",
       "date": "11 / 2024",
-      "img": "/images/project3-moveon.jpg",
+      "img": "./src/assets/images/project3-moveon.jpg",
       "bio": "An active lifestyle with fitness training.",
       "url": "https://moveon-fitness.netlify.app/",
       "repo": "https://github.com/2ao1-1/MoveOn",
@@ -175,7 +175,7 @@
     {
       "title": "AO (Portfolio)",
       "date": "12 / 2024",
-      "img": "/images/project1-Portfolio.jpg",
+      "img": "./src/assets/images/project1-Portfolio.jpg",
       "bio": "Personal portfolio website showcasing frontend development skills and projects",
       "url": "https://2ao1.netlify.app/",
       "repo": "https://github.com/2ao1-1/AO",
@@ -199,8 +199,8 @@
     {
       "title": "Bsaraha",
       "date": "2 / 2025",
-      "img": "/images/project7-bsaraha.jpg",
-      "phone": "/images/project7-bsaraha-phone.jpg",
+      "img": "./src/assets/images/project7-bsaraha.jpg",
+      "phone": "./src/assets/images/project7-bsaraha-phone.jpg",
       "bio": "Personal portfolio website showcasing frontend development skills and projects",
       "url": "http://144.91.75.57:3000",
       "repo": "https://github.com/2ao1-1/bsaraha",
@@ -224,7 +224,7 @@
     {
       "title": "Crusto Pizza",
       "date": "4 / 2025",
-      "img": "/images/project6-crusto.jpg",
+      "img": "./src/assets/images/project6-crusto.jpg",
       "bio": "An Italian pizza restaurant",
       "url": "https://crusto-pizza.netlify.app/",
       "repo": "https://github.com/2ao1-1/Crusto-v2",
@@ -245,7 +245,7 @@
   "experiance": [
     {
       "name": "AO",
-      "logo": "./images/sroty1.jpg",
+      "logo": "./src/assets/images/sroty1.jpg",
       "role": "Front-End developer Intern",
       "timeZone": "Two Year [2]",
       "years": "2024-2025",
