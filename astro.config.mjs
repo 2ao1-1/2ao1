@@ -13,6 +13,10 @@ export default defineConfig({
 
   integrations: [react(), sitemap(), tailwind()],
 
+  // style: {
+  //   global: true,
+  // },
+
   vite: {
     build: {
       rollupOptions: {
