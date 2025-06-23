@@ -1,40 +1,23 @@
 ---
 import { Image } from 'astro:assets';
-import info from "../data/info.json";
-interface Props {
-  src: string | ImageMetadata;
-  alt: string;
-  width?: number; 
-  height?: number; 
-  class?: string;
-  inferSize?: boolean;
-}
-
-// Props destructuring
-const {
-  src,
-  alt,
-  width,
-  height,
-  inferSize = true,
-  class: className = '',
-  ...rest
+import info from '../data/sample.json';
+const { 
+  src, 
+  alt, 
+  width = 400, 
+  height = 300, 
+  class: className = '', 
+  loading = 'lazy',
+  ...rest 
 } = Astro.props;
-
-// Infer width/height if possible and not provided explicitly
-const finalWidth = width ?? (inferSize && typeof src === 'object' && 'width' in src ? src.width : undefined);
-const finalHeight = height ?? (inferSize && typeof src === 'object' && 'height' in src ? src.height : undefined);
-
-// Build image props
-const imageProps = {
-  src,
-  alt,
-  width: finalWidth,
-  height: finalHeight,
-  class: className,
-  loading: "lazy" as const,
-  ...rest,
-};
 ---
 
-<Image {...imageProps} />
+<Image 
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  loading={loading}
+  {...rest}
+/>
