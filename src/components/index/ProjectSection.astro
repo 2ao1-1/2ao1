@@ -1,5 +1,6 @@
 ---
 import info from '../../data/sample.json';
+import Image from '../../ui/Image.astro';
 import RefreshText from '../../ui/RefreshText.astro';
 import Link from '../Link.astro';
 ---
@@ -17,8 +18,13 @@ import Link from '../Link.astro';
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 lg:gap-x-12 gap-y-10 md:gap-y-20 items-start justify-between w-full py-10 relative h-fit">
       {info.projects.map(project=>
       <div class="col-span-1 group transition-all duration-500">
-        <img src={project.img} alt="" class="w-full grayscale hover:grayscale-0 transition-all duration-500">
-              
+        {/* <img src={project.img} alt="" class="w-full grayscale hover:grayscale-0 transition-all duration-500"> */}
+        <Image 
+          src={project.img}
+          alt={project.title}
+          class="w-full grayscale hover:grayscale-0 transition-all duration-500"
+        />
+
         <div class="flex flex-row justify-between items-start sm:items-center font-headline py-1 gap-2 sm:gap-0">
           <div class="flex flex-row gap-2 sm:gap-8 overflow-hidden">
             <span class="project-line text-sm sm:text-base">[0{info.projects.indexOf(project)+1}]</span>
